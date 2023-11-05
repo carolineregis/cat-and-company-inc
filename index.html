@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Cat and company</title>
+    <script>
+      function anotherQuestion() {
+        var name = document.getElementById("name").value;
+        document.getElementById('firstQuestion').style.visibility = "hidden";
+        document.getElementById('secondQuestion').style.display = "block";
+        return;
+      }
+    
+      function submitForm() {
+    
+          var worries = document.getElementById("worries").value;
+    
+          // Send data to the backend
+          fetch("/process", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ name: name, worries: worries })
+          })
+          .then(response => response.json())
+          .then(data => {
+              // Handle the response from the backend
+              console.log(data);
+          })
+          .catch(error => {
+              console.error("Error:", error);
+          });
+      }
+    </script>
+</head>
+
+
+<body>
+    <h1>Cat and company</h1>
+
+    <div class="wrapper">
+      <div class="image-box">
+        <img src="santa-possum.jpg" class="main-pic">
+      </div>  
+
+      <div class="form-box">
+        <form>
+
+          <div id="firstQuestion" class="first-question">
+            <h3> Hi, what's your name? </h3> 
+    
+            <label for="name">Type your name here</label>
+            <br>
+            <input type="text" id="name" required><br><br>
+            <button id="nextStep" onclick="anotherQuestion()"> Next </button>
+          </div>
+    
+          <div id="secondQuestion" class="second-question">
+            <h3>What's bottering you today?</h3>
+    
+            <label for="worries">Your worries here:</label>
+            <input type="text" id="worries" required><br><br>
+            <button onclick="submitForm()">Submit</button>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+   
+ 
+</body>
+</html>
